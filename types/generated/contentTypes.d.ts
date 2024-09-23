@@ -374,10 +374,13 @@ export interface ApiEventEvent extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    locationName: Attribute.String;
-    date: Attribute.DateTime;
-    latitude: Attribute.Float;
-    longitude: Attribute.Float;
+    locationName: Attribute.String & Attribute.Required;
+    date: Attribute.DateTime & Attribute.Required;
+    latitude: Attribute.Float & Attribute.Required;
+    longitude: Attribute.Float & Attribute.Required;
+    numberOfCooks: Attribute.Integer & Attribute.Required;
+    numberOfDeliveryPerson: Attribute.Integer & Attribute.Required;
+    numberOfFieldWorkers: Attribute.Integer & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

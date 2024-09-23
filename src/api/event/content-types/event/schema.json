@@ -13,16 +13,32 @@
   "pluginOptions": {},
   "attributes": {
     "locationName": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "date": {
-      "type": "datetime"
+      "type": "datetime",
+      "required": true
     },
     "latitude": {
-      "type": "float"
+      "type": "float",
+      "required": true
     },
     "longitude": {
-      "type": "float"
+      "type": "float",
+      "required": true
+    },
+    "numberOfCooks": {
+      "type": "integer",
+      "required": true
+    },
+    "numberOfDeliveryPerson": {
+      "type": "integer",
+      "required": true
+    },
+    "numberOfFieldWorkers": {
+      "type": "integer",
+      "required": true
     }
   }
 }

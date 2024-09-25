@@ -15,6 +15,7 @@ const sanitizeSearchQuery = (query) => {
     .replaceAll(/c/g, "ć")
     .replaceAll(/C/g, "Ć");
 };
+
 module.exports = {
   async find(ctx) {
     const {

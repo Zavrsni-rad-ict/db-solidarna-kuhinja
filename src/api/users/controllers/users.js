@@ -2,19 +2,19 @@
 
 const sanitizeSearchQuery = (query) => {
   return query
-    .replaceAll(/dj/g, "đ")
-    .replaceAll(/DJ/g, "Đ")
-    .replaceAll(/dJ/g, "Đ")
-    .replaceAll(/Dj/g, "Đ")
+    .replace(/dj/gi, (match) => {
+      return match === "dj" ? "đ" : "Đ"; // "dj" ide u "đ", "DJ" u "Đ"
+    })
     .replaceAll(/s/g, "š")
     .replaceAll(/S/g, "Š")
     .replaceAll(/z/g, "ž")
     .replaceAll(/Z/g, "Ž")
-    .replaceAll(/c/g, "č")
-    .replaceAll(/C/g, "Č")
     .replaceAll(/c/g, "ć")
-    .replaceAll(/C/g, "Ć");
+    .replaceAll(/C/g, "Ć")
+    .replaceAll(/c/g, "č")
+    .replaceAll(/C/g, "Č");
 };
+// Miroslav -> Mirošlav
 
 module.exports = {
   async find(ctx) {
@@ -42,15 +42,15 @@ module.exports = {
     }
 
     const normalizedSearch = sanitizeSearchQuery(search);
-    console.log({ normalizedSearch });
+    // console.log({ normalizedSearch, search });
     try {
       // Priprema filtera
       const filters = {
         $or: [
-          { username: { $containsi: normalizedSearch } },
-          { firstName: { $containsi: normalizedSearch } },
-          { lastName: { $containsi: normalizedSearch } },
-          { email: { $containsi: normalizedSearch } },
+          { username: { $containsi: search } },
+          { firstName: { $containsi: search } },
+          { lastName: { $containsi: search } },
+          { email: { $containsi: search } },
         ],
       };
 

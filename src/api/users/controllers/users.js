@@ -124,12 +124,35 @@ module.exports = {
       (event) => event.id !== parseInt(eventId)
     );
 
-    // Ažuriraj korisnika koristeći entityService
+    // Pronađi događaj na koji se korisnik odjavljuje
+    const event = await strapi.entityService.findOne(
+      "api::event.event", // Zameni sa stvarnim imenom tvoje entiteta za događaj
+      eventId,
+      { populate: "*" } // Populiraj sve relacije
+    );
+
+    if (!event) {
+      return ctx.throw(404, "Event not found");
+    }
+
+    // Ažuriraj signedUpChefs u događaju
+    const updatedSignedUpChefs =
+      event.signedUpChefs > 0 ? event.signedUpChefs - 1 : 0;
+
+    // Ažuriraj korisnika i događaj
     await strapi.entityService.update(
       "plugin::users-permissions.user",
       userId,
       {
         data: { events: updatedEvents }, // Ažuriraj events
+      }
+    );
+
+    await strapi.entityService.update(
+      "api::event.event", // Zameni sa stvarnim imenom tvoje entiteta za događaj
+      eventId,
+      {
+        data: { signedUpChefs: updatedSignedUpChefs }, // Ažuriraj signedUpChefs
       }
     );
 

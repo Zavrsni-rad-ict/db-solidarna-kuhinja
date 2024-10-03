@@ -99,4 +99,51 @@ module.exports = {
       return ctx.internalServerError("Unable to fetch users");
     }
   },
+
+  async removeEvent(ctx) {
+    const { userId, eventId } = ctx.params;
+
+    // Pronađi korisnika i populiraj sve relacije
+    const user = await strapi.entityService.findOne(
+      "plugin::users-permissions.user",
+      userId,
+      { populate: "*" } // Populiraj sve relacije
+    );
+
+    if (!user) {
+      return ctx.throw(404, "User not found");
+    }
+
+    // Proveri da li je polje events definisano i da li je niz
+    if (!Array.isArray(user.events)) {
+      return ctx.throw(400, "User does not have any events registered");
+    }
+
+    // Filtriraj događaj iz niza events
+    const updatedEvents = user.events.filter(
+      (event) => event.id !== parseInt(eventId)
+    );
+
+    // Ažuriraj korisnika koristeći entityService
+    await strapi.entityService.update(
+      "plugin::users-permissions.user",
+      userId,
+      {
+        data: { events: updatedEvents }, // Ažuriraj events
+      }
+    );
+
+    // Pribavi ažuriranog korisnika
+    const updatedUser = await strapi.entityService.findOne(
+      "plugin::users-permissions.user",
+      userId,
+      { populate: "*" } // Populiraj sve relacije
+    );
+
+    // Vrati ažuriranog korisnika
+    return ctx.send({
+      message: "Event removed successfully",
+      user: updatedUser,
+    });
+  },
 };

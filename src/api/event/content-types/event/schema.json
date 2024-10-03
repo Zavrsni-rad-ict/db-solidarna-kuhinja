@@ -39,6 +39,16 @@
     "numberOfFieldWorkers": {
       "type": "integer",
       "required": true
+    },
+    "users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "events"
+    },
+    "signedUpChefs": {
+      "type": "integer",
+      "default": 0
     }
   }
 }

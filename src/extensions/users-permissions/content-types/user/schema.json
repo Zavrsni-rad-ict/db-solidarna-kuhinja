@@ -70,6 +70,9 @@
     },
     "lastName": {
       "type": "string"
+    },
+    "participationCount": {
+      "type": "integer"
     }
   }
 }

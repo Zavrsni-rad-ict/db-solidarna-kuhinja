@@ -375,7 +375,7 @@ export interface ApiEventEvent extends Schema.CollectionType {
   };
   attributes: {
     locationName: Attribute.String & Attribute.Required;
-    date: Attribute.DateTime & Attribute.Required;
+    date: Attribute.Date & Attribute.Required;
     latitude: Attribute.Float & Attribute.Required;
     longitude: Attribute.Float & Attribute.Required;
     numberOfCooks: Attribute.Integer & Attribute.Required;
@@ -762,6 +762,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     >;
     firstName: Attribute.String;
     lastName: Attribute.String;
+    participationCount: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

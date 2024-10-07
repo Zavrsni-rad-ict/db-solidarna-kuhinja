@@ -1,7 +1,7 @@
 module.exports = {
   async updateEvent(ctx) {
     const { id } = ctx.params; // Event ID
-    const { users } = ctx.request.body.data; // Pretpostavimo da users dolazi u telu zahteva
+    const { users, signedKey } = ctx.request.body.data; // signedKey je prosleđen u telu zahteva
 
     // Pronađi događaj
     const event = await strapi.entityService.findOne("api::event.event", id, {
@@ -12,17 +12,29 @@ module.exports = {
       return ctx.throw(404, "Event not found");
     }
 
-    // Inkrementiraj signedUpChefs
-    const updatedSignedUpChefs = event.signedUpChefs + 1;
+    // Proveri da li je validan signedKey
+    const validKeys = [
+      "signedUpChefs",
+      "signedUpDeliverer",
+      "signedUpFieldWorkers",
+    ];
+    if (!validKeys.includes(signedKey)) {
+      return ctx.throw(400, "Invalid signedKey specified");
+    }
 
-    // Ažuriraj događaj sa novim korisnicima i signedUpChefs
+    // Inkrementiraj odgovarajuće polje
+    const updatedFields = {
+      [signedKey]: event[signedKey] + 1,
+    };
+
+    // Ažuriraj događaj sa novim korisnicima i odgovarajućim brojačem
     const updatedEvent = await strapi.entityService.update(
       "api::event.event",
       id,
       {
         data: {
           users, // Ažuriraj korisnike
-          signedUpChefs: updatedSignedUpChefs, // Inkrementiraj broj prijavljenih chefova
+          ...updatedFields, // Ažuriraj dinamički polje na osnovu signedKey
         },
       }
     );

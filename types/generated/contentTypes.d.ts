@@ -379,8 +379,12 @@ export interface ApiEventEvent extends Schema.CollectionType {
     latitude: Attribute.Float & Attribute.Required;
     longitude: Attribute.Float & Attribute.Required;
     numberOfCooks: Attribute.Integer & Attribute.Required;
-    numberOfDeliveryPerson: Attribute.Integer & Attribute.Required;
-    numberOfFieldWorkers: Attribute.Integer & Attribute.Required;
+    numberOfDeliveryPerson: Attribute.Integer &
+      Attribute.Required &
+      Attribute.DefaultTo<0>;
+    numberOfFieldWorkers: Attribute.Integer &
+      Attribute.Required &
+      Attribute.DefaultTo<0>;
     users: Attribute.Relation<
       'api::event.event',
       'manyToMany',
@@ -770,7 +774,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     >;
     firstName: Attribute.String;
     lastName: Attribute.String;
-    participationCount: Attribute.Integer;
+    participationCount: Attribute.Integer & Attribute.DefaultTo<0>;
     events: Attribute.Relation<
       'plugin::users-permissions.user',
       'manyToMany',

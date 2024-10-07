@@ -72,7 +72,8 @@
       "type": "string"
     },
     "participationCount": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     },
     "events": {
       "type": "relation",

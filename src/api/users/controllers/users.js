@@ -102,6 +102,7 @@ module.exports = {
 
   async removeEvent(ctx) {
     const { userId, eventId } = ctx.params;
+    const signedKey = ctx.query.signedKey; // Uzimamo signedKey iz query parametara
 
     // Pronađi korisnika i populiraj sve relacije
     const user = await strapi.entityService.findOne(
@@ -135,9 +136,9 @@ module.exports = {
       return ctx.throw(404, "Event not found");
     }
 
-    // Ažuriraj signedUpChefs u događaju
-    const updatedSignedUpChefs =
-      event.signedUpChefs > 0 ? event.signedUpChefs - 1 : 0;
+    // Ažuriraj broj prijavljenih na osnovu signedKey
+    const updatedSignedUpCount =
+      event[signedKey] > 0 ? event[signedKey] - 1 : 0;
 
     // Ažuriraj korisnika i događaj
     await strapi.entityService.update(
@@ -152,7 +153,7 @@ module.exports = {
       "api::event.event", // Zameni sa stvarnim imenom tvoje entiteta za događaj
       eventId,
       {
-        data: { signedUpChefs: updatedSignedUpChefs }, // Ažuriraj signedUpChefs
+        data: { [signedKey]: updatedSignedUpCount }, // Ažuriraj polje na osnovu signedKey
       }
     );
 

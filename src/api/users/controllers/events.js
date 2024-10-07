@@ -15,8 +15,6 @@ module.exports = {
     // Inkrementiraj signedUpChefs
     const updatedSignedUpChefs = event.signedUpChefs + 1;
 
-    console.log("EEEE SRBIJA");
-
     // Ažuriraj događaj sa novim korisnicima i signedUpChefs
     const updatedEvent = await strapi.entityService.update(
       "api::event.event",

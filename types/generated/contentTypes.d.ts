@@ -387,6 +387,8 @@ export interface ApiEventEvent extends Schema.CollectionType {
       'plugin::users-permissions.user'
     >;
     signedUpChefs: Attribute.Integer & Attribute.DefaultTo<0>;
+    signedUpDeliverer: Attribute.Integer & Attribute.DefaultTo<0>;
+    signedUpFieldWorkers: Attribute.Integer & Attribute.DefaultTo<0>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

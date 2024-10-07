@@ -49,6 +49,15 @@
     "signedUpChefs": {
       "type": "integer",
       "default": 0
+    },
+    "signedUpDeliverer": {
+      "type": "integer",
+      "default": 0,
+      "required": false
+    },
+    "signedUpFieldWorkers": {
+      "type": "integer",
+      "default": 0
     }
   }
 }

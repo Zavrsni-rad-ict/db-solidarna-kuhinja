@@ -30,7 +30,8 @@
     },
     "numberOfCooks": {
       "type": "integer",
-      "required": true
+      "required": true,
+      "default": 0
     },
     "numberOfDeliveryPerson": {
       "type": "integer",

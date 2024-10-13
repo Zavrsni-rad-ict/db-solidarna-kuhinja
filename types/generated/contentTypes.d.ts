@@ -378,7 +378,9 @@ export interface ApiEventEvent extends Schema.CollectionType {
     date: Attribute.Date & Attribute.Required;
     latitude: Attribute.Float & Attribute.Required;
     longitude: Attribute.Float & Attribute.Required;
-    numberOfCooks: Attribute.Integer & Attribute.Required;
+    numberOfCooks: Attribute.Integer &
+      Attribute.Required &
+      Attribute.DefaultTo<0>;
     numberOfDeliveryPerson: Attribute.Integer &
       Attribute.Required &
       Attribute.DefaultTo<0>;

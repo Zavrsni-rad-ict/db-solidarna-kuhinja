@@ -27,13 +27,16 @@ module.exports = {
       [signedKey]: event[signedKey] + 1,
     };
 
+    // Spoji postojeće korisnike sa novim korisnicima
+    const updatedUsers = [...new Set([...event.users, ...users])];
+
     // Ažuriraj događaj sa novim korisnicima i odgovarajućim brojačem
     const updatedEvent = await strapi.entityService.update(
       "api::event.event",
       id,
       {
         data: {
-          users, // Ažuriraj korisnike
+          users: updatedUsers, // Ažuriraj korisnike
           ...updatedFields, // Ažuriraj dinamički polje na osnovu signedKey
         },
       }

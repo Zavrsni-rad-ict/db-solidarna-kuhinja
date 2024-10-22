@@ -22,6 +22,21 @@ module.exports = {
       return ctx.throw(400, "Invalid signedKey specified");
     }
 
+    // Definiši maksimalne vrednosti za prijave
+    const maxLimits = {
+      signedUpChefs: event.numberOfCooks,
+      signedUpDeliverer: event.numberOfDeliveryPerson,
+      signedUpFieldWorkers: event.numberOfFieldWorkers,
+    };
+
+    // Proveri da li bi ažuriranje prešlo maksimalnu dozvoljenu vrednost
+    if (event[signedKey] >= maxLimits[signedKey]) {
+      return ctx.throw(
+        400,
+        `Cannot sign up more users. Maximum limit for ${signedKey} reached.`
+      );
+    }
+
     // Inkrementiraj odgovarajuće polje
     const updatedFields = {
       [signedKey]: event[signedKey] + 1,

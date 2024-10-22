@@ -30,7 +30,7 @@ module.exports = {
     };
 
     // Proveri da li bi ažuriranje prešlo maksimalnu dozvoljenu vrednost
-    if (event[signedKey] >= maxLimits[signedKey]) {
+    if (event[signedKey] > maxLimits[signedKey]) {
       return ctx.throw(
         400,
         `Cannot sign up more users. Maximum limit for ${signedKey} reached.`
